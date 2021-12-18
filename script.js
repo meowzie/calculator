@@ -14,3 +14,21 @@ function divide(num1, num2) {
     let quotient = num1/num2;
     return quotient;
 };
+
+function operate (num1, operator, num2) {
+    let answer;
+    switch (operator) {
+        case "+":
+            answer = add(num1, num2);
+            break;
+        case "-":
+            answer = subtract(num1, num2);
+            break;
+        case "*":
+            answer = multiply(num1, num2);
+            break;
+        case "/":
+            answer = divide(num1, num2);
+    };
+    return answer;
+}
