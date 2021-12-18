@@ -53,15 +53,28 @@
     border: 0px;
     border-radius: 7px;
     font-family: 'Montserrat', sans-serif;
+    transition: 0.05s;
+}
+button:hover {
+    background: rgb(230, 85, 1);
 }
 #equal {
     background: rgb(0, 90, 12);
 }
+#equal:hover {
+    background: rgb(0, 143, 19);
+}
 .operators {
-    background: rgb(0, 93, 180);
+    background: rgb(1, 90, 173);
+}
+.operators:hover {
+    background: rgb(0, 132, 255);
 }
 .clear {
     width: 100%;
     background: rgb(100, 0, 167);
     font-weight: 600;
+}
+.clear:hover {
+    background: rgb(153, 0, 255);
 }
