@@ -52,6 +52,7 @@
     font-size: 3em;
     border: 0px;
     border-radius: 7px;
+    font-family: 'Montserrat', sans-serif;
 }
 #equal {
     background: rgb(0, 90, 12);
@@ -62,4 +63,5 @@
 .clear {
     width: 100%;
     background: rgb(100, 0, 167);
+    font-weight: 600;
 }
