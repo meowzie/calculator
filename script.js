@@ -1,165 +1,96 @@
 function add(num1, num2) {
-    let sum = num1 + num2;
-    return sum;
+    return num1 + num2;
 };
 function subtract(num1, num2) {
-    let difference = num1 - num2;
-    return difference;
+    return num1 - num2;
 };
 function multiply(num1, num2) {
-    let product = num1*num2;
-    return product;
+    return num1*num2;
 };
 function divide(num1, num2) {
-    let quotient = num1/num2;
-    return quotient;
+    return num1/num2;
 };
-
-function operate(num1, operator, num2) {
+function operate(object) {
     let answer;
-    switch (operator) {
+    inputs.operandOne = Number(inputs.operandOne);
+    inputs.operandTwo = Number(inputs.operandTwo);
+    switch (object.operator) {
         case "+":
-            answer = add(num1, num2);
+            answer = add(object.operandOne, object.operandTwo);
             break;
         case "-":
-            answer = subtract(num1, num2);
+            answer = subtract(object.operandOne, object.operandTwo);
             break;
         case "×":
-            answer = multiply(num1, num2);
+            answer = multiply(object.operandOne, object.operandTwo);
             break;
         case "÷":
-            answer = divide(num1, num2);
+            answer = divide(object.operandOne, object.operandTwo);
     };
     return answer;
-}
+};
 
-let buttons = document.querySelectorAll('.button');
-let numbers = document.querySelectorAll('.numbers')
-let operators = document.querySelectorAll('.operators')
-let paraNum1 = document.querySelector('.para-num1');
-let paraOperator = document.querySelector('.para-operator');
-let paraNum2 = document.querySelector('.para-num2');
-let num1 = '';
-let num2 = '';
+let numbers = document.querySelectorAll('.numbers');
+let operators =  document.querySelectorAll('.operators');
+let clear = document.querySelector('.clear');
+let equal = document.querySelector('.equal');
+let para = document.querySelector('.para');
+
+let inputs = {
+    operandOne: '',
+    operator: '',
+    operandTwo: ''
+};
+let answer = '';
 let counter = 0;
 
+para.textContent = '0';
 
+function appendToPara(string) {
+    if (shouldReset(para)) reset();
+    answer = '';
+    para.textContent += string;
+};
 
+function shouldReset(paragraph) {
+    if (paragraph.textContent==='0' || answer!=='') return true;
+    else return false;
+};
 
-numbers.forEach(number => number.addEventListener('click', () => {
-    if (counter>counterAtOperator) return;
-    let inputNum
-    if (number.classList.contains('1')) {
-        inputNum = `1`;
-    } else if (number.classList.contains('2')) {
-        inputNum = `2`;
-    } else if (number.classList.contains('3')) {
-        inputNum = `3`;
-    } else if (number.classList.contains('4')) {
-        inputNum = `4`;
-    } else if (number.classList.contains('5')) {
-        inputNum = `5`;
-    } else if (number.classList.contains('6')) {
-        inputNum = `6`;
-    } else if (number.classList.contains('7')) {
-        inputNum = `7`;
-    } else if (number.classList.contains('8')) {
-        inputNum = `8`;
-    } else if (number.classList.contains('9')) {
-        inputNum = `9`;
-    } else if (number.classList.contains('0')) {
-        inputNum = `0`;
-    } else if (number.classList.contains('dot')) {
-        inputNum = `.`;
-    }
-    num1 += inputNum
-    paraNum1.textContent = num1;
+function decideIfFirst(decider) {
+    if (decider%2===0) return true;
+    else return false;
+};
+
+function reset() {
+    para.textContent = '';
+    answer = ''
+    counter = 0;
+    inputs = {
+        operandOne: '',
+        operator: '',
+        operandTwo: ''
+    };
+};
+
+numbers.forEach(number => number.addEventListener('click', e => {
+    appendToPara(number.textContent);
+    if (decideIfFirst(counter)) inputs.operandOne += number.textContent;
+    else inputs.operandTwo += number.textContent;
+}))
+
+operators.forEach(operator => operator.addEventListener('click', e => {
+    appendToPara(operator.textContent);
+    inputs.operator = operator.textContent;
     counter++;
-}));
+}))
 
-let counterAtOperator;
-function inputSecondNum() {
-    if (counter===counterAtOperator+1) return true;
-}
-
-let theOperator;
-
-operators.forEach(operator => operator.addEventListener('click', () => {
-    if (counter<1) return;
-    
-    if (operator.classList.contains('plus')) {
-        theOperator = `+`;
-    } else if (operator.classList.contains('minus')) {
-        theOperator = `-`
-    } else if (operator.classList.contains('multiply')) {
-        theOperator = `×`
-    } else if (operator.classList.contains('divide')) {
-        theOperator = `÷`
-    }
-    paraOperator.textContent = theOperator;
-    counterAtOperator = counter;
-    counter++
-    if (inputSecondNum()) {
-        numbers.forEach(number => number.addEventListener('click', () => {
-            let inputNum
-            if (number.classList.contains('1')) {
-                inputNum = `1`;
-            } else if (number.classList.contains('2')) {
-                inputNum = `2`;
-            } else if (number.classList.contains('3')) {
-                inputNum = `3`;
-            } else if (number.classList.contains('4')) {
-                inputNum = `4`;
-            } else if (number.classList.contains('5')) {
-                inputNum = `5`;
-            } else if (number.classList.contains('6')) {
-                inputNum = `6`;
-            } else if (number.classList.contains('7')) {
-                inputNum = `7`;
-            } else if (number.classList.contains('8')) {
-                inputNum = `8`;
-            } else if (number.classList.contains('9')) {
-                inputNum = `9`;
-            } else if (number.classList.contains('0')) {
-                inputNum = `0`;
-            } else if (number.classList.contains('dot')) {
-                inputNum = `.`;
-            }
-            num2 += inputNum
-            paraNum2.textContent = num2;
-        }))
-    }
-}));
-
-let equal = document.querySelector('.equal');
-let display = document.querySelector('.display');
-let answer = document.createElement('p');
-answer.classList.add('para');
-
-equal.addEventListener('click', () => {
-    num1 = Number(num1);
-    num2 = Number(num2);
-    paraNum1.textContent = ""
-    paraNum2.textContent = ""
-    paraOperator.textContent = ""
-    display.appendChild(answer);
-    answer.textContent = `${operate(num1, theOperator, num2)}`
+equal.addEventListener('click', e => {
+    answer = `${operate(inputs)}`
+    para.textContent = answer;
 })
 
-let clear = document.querySelector('.clear');
-
-clear.addEventListener('click', () => {
-    if (answer.textContent===`${operate(num1, theOperator, num2)}`) {
-        display.removeChild(answer);
-        num1 = '';
-        num2 = '';
-        theOperator = '';
-    } else {
-        paraNum1.textContent = ""
-        num1 = ''
-        paraNum2.textContent = ""
-        num2 = ''
-        paraOperator.textContent = ""
-        theOperator = ''
-    }
+clear.addEventListener('click', e => {
+    reset();
+    para.textContent = `0`;
 })
